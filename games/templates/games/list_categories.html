@@ -1,0 +1,12 @@
+{% extends 'games/base.html' %}
+{% block content %}
+{% for c in cats %}
+{% if c.slug == cat_selected %}
+<p class="text-white"><strong>{{ c.name }}</strong></p>
+{% else %}
+<ul class="list-unstyled">
+    <li><a href="{{ c.get_absolute_url }}" class="text-decoration-none text-white">{{ c.name }}</a></li>
+</ul>
+{% endif %}
+{% endfor %}
+{% endblock %}

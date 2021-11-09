@@ -41,9 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
     'debug_toolbar',
     'games.apps.GamesConfig',
+    'cloudinary',
     'captcha',
 ]
 
@@ -153,3 +155,10 @@ CACHES = {
         'LOCATION': os.path.join(BASE_DIR, 'newsite_cache'),
     }
 }
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'hc60wxys1',
+    'API_KEY': '278881823297535',
+    'API_SECRET': 'uKi5Y0cxH7MIAzoqIOkLziLiNhc',
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

@@ -1,3 +1,4 @@
+from .forms import CommentForm
 from .models import *
 
 menu = [
@@ -13,6 +14,7 @@ class DataMixin:
         context = kwargs
         cats = Category.objects.all()
         user_menu = menu.copy()
+        #если юзер авторизован + добавить статью
         if not self.request.user.is_authenticated:
             user_menu.pop(1)
         context['menu'] = user_menu

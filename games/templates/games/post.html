@@ -17,5 +17,21 @@
     </div>
 
 </div>
+{% for comment in comments %}
+    <div class="comment">
+        <p class="info">
+            Comment {{ forloop.counter }} by {{ comment.name }}
 
+        </p>
+        {{ comment.body|linebreaks }}
+    </div>
+
+{% endfor %}
+
+    <h2>Добавить коментарий</h2>
+    <form action="{% url 'Comment_show' post.id %}" method="post">
+        {{ comment_form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Add comment"></p>
+    </form>
 {% endblock %}

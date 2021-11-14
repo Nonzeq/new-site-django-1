@@ -12,6 +12,7 @@ urlpatterns = [
     path('Hide/', Hide.as_view(), name='Hide'),
     path('register/', RegisterUser.as_view(), name='register'),
     path('post/<slug:post_slug>/', ShowPost.as_view(), name='post'),
-    path('category/<slug:cat_slug>/', Games_show_catogory.as_view(), name='category')
+    path('category/<slug:cat_slug>/', Games_show_catogory.as_view(), name='category'),
+    path('comments/<int:pk>/', Comment_show.as_view(), name='Comment_show'),
 ]
 

@@ -54,3 +54,11 @@ class ContactForm(forms.Form):
     email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'form-control mx-sm-3'}))
     content = forms.CharField(label='Контент', widget=forms.Textarea(attrs={'cols': 50, 'rows': 8, 'class': 'form-control mx-sm-3'}))
     captcha = CaptchaField(label='Пройдите проверку')
+
+
+class CommentForm(forms.ModelForm):
+    name = forms.CharField(label='Имя', max_length=200, widget=forms.TextInput(attrs={'class': 'form-control mx-sm-3'}))
+    body = forms.CharField(label='Контент',widget=forms.Textarea(attrs={'cols': 50, 'rows': 8, 'class': 'form-control mx-sm-3'}))
+    class Meta:
+        model = Comment
+        fields = ('name','body')

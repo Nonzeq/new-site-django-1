@@ -18,5 +18,13 @@ class CategoryAdmin(admin.ModelAdmin):  #класс категории
     prepopulated_fields = {'slug': ('name',)}
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'post', 'time_create', 'time_update', 'is_published')
+    list_filter = ('time_create', 'time_update', 'is_published')
+    list_editable = ('is_published',)
+    list_filter = ('time_create', 'is_published')
+    search_fields = ('name', 'body')
+
 admin.site.register(Games, GamesAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Comment, CommentAdmin)

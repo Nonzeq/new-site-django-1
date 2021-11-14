@@ -12,7 +12,7 @@ class Games(models.Model):
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False, verbose_name='Публикация')
-    cat = models.ForeignKey('Category', on_delete=models.PROTECT,null=True, verbose_name='Категория')
+    cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, verbose_name='Категория')
 
     def __str__(self):
         return self.title
@@ -41,3 +41,21 @@ class Category(models.Model):
         verbose_name = 'Категории'
         verbose_name_plural = 'Категории'
         ordering = ['id']
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Games, on_delete=models.CASCADE, related_name='comments')
+    name = models.CharField(max_length=100, verbose_name='Название')
+    body = models.TextField(verbose_name='Коменатрий')
+    time_create = models.DateTimeField(auto_now_add=True)
+    time_update = models.DateTimeField(auto_now=True)
+    is_published = models.BooleanField(default=False, verbose_name='Публикация')
+
+
+    class Meta:
+        ordering = ['time_create']
+
+    def __str__(self):
+        return 'Коментарий от {} на {}.'.format(self.name, self.post)
+
+

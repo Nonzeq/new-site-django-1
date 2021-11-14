@@ -3,12 +3,12 @@ from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, FormView, TemplateView
+from django.views.generic import ListView, DetailView, CreateView, FormView, TemplateView,View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import *
 from .models import *
 from .utils import *
-
+from django.views.generic.edit import FormMixin
 # Create your views here.
 
 
@@ -111,19 +111,38 @@ def pageNotFound(request, exeption):
 
 
 class ShowPost(DataMixin, DetailView):
-    model = Games
+    model = Games,
     template_name = 'games/post.html'
     slug_url_kwarg = 'post_slug'
     context_object_name = 'post'
+    form_class = CommentForm
 
 
     def get_queryset(self):
         return Games.objects.all()
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['comments'] = Comment.objects.filter(post=self.object)
+        context['comment_form'] = CommentForm()
         c_def = self.get_user_context(title='Статьи')
         return context | c_def
+
+
+class Comment_show(View):
+    def post(self, request, pk):
+        form = CommentForm(request.POST)
+        post = Games.objects.get(id=pk)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.post = post
+            form.save()
+
+        return redirect(post.get_absolute_url())
+
+
+
+
 
 # def show_post(request, post_slug):
 #     post = get_object_or_404(Games, slug=post_slug)

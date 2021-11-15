@@ -29,9 +29,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-#fd3g=#gt1m9y9%o3es)%m^z!@ulo0(5i7m*s2=*xsg)(6dyec'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,11 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-#    'cloudinary_storage',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
     'debug_toolbar',
     'games.apps.GamesConfig',
-#    'cloudinary',
+    'cloudinary',
     'captcha',
 ]
 
@@ -133,8 +133,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES = []
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-#django_heroku.settings(locals())
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+django_heroku.settings(locals())
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -162,4 +162,4 @@ CLOUDINARY_STORAGE = {
     'API_KEY': '278881823297535',
     'API_SECRET': 'uKi5Y0cxH7MIAzoqIOkLziLiNhc',
 }
-#DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

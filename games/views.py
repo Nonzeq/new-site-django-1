@@ -129,16 +129,24 @@ class ShowPost(DataMixin, DetailView):
         return context | c_def
 
 
+
+
 class Comment_show(View):
     def post(self, request, pk):
         form = CommentForm(request.POST)
+        # pk posta
         post = Games.objects.get(id=pk)
+        # login usera
+        name = User.objects.get(id=request.user.id)
         if form.is_valid():
             form = form.save(commit=False)
+            # + pk posta v formu
             form.post = post
+            # + login v formu
+            form.name = name
             form.save()
-
         return redirect(post.get_absolute_url())
+
 
 
 
@@ -205,3 +213,5 @@ class Hide(DataMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Heart')
         return context | c_def
+
+

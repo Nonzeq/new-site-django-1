@@ -1,4 +1,6 @@
-from .forms import CommentForm
+from django.http import HttpResponseForbidden
+
+from .forms import *
 from .models import *
 
 menu = [
@@ -14,7 +16,7 @@ class DataMixin:
         context = kwargs
         cats = Category.objects.all()
         user_menu = menu.copy()
-        #если юзер авторизован + добавить статью
+        #если юзер не авторизован - добавить статью
         if not self.request.user.is_authenticated:
             user_menu.pop(1)
         context['menu'] = user_menu
@@ -22,3 +24,4 @@ class DataMixin:
         if 'cat_selected' not in context:
             context['cat_selected'] = 0
         return context
+

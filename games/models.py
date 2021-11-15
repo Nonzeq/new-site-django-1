@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
@@ -45,7 +46,7 @@ class Category(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Games, on_delete=models.CASCADE, related_name='comments')
-    name = models.CharField(max_length=100, verbose_name='Название')
+    name = models.ForeignKey(User, on_delete=models.CASCADE, related_name='name')
     body = models.TextField(verbose_name='Коменатрий')
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)

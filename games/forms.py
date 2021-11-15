@@ -1,8 +1,11 @@
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from captcha.fields import CaptchaField, CaptchaTextInput
+
+
 from .models import *
 
 
@@ -57,8 +60,8 @@ class ContactForm(forms.Form):
 
 
 class CommentForm(forms.ModelForm):
-    name = forms.CharField(label='Имя', max_length=200, widget=forms.TextInput(attrs={'class': 'form-control mx-sm-3'}))
-    body = forms.CharField(label='Контент',widget=forms.Textarea(attrs={'cols': 50, 'rows': 8, 'class': 'form-control mx-sm-3'}))
+    body = forms.CharField(label='Контент',widget=forms.Textarea(attrs={'cols': 50, 'rows': 3, 'class': 'form-control mx-sm-3'}))
     class Meta:
         model = Comment
-        fields = ('name','body')
+        fields = ('body',)
+

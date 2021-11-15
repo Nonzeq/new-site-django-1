@@ -1,15 +1,15 @@
 {% extends 'games/base.html' %}
-
+{% load games_tags %}
 {% block content %}
 
 <div class="container">
     <div class="row">
         <h1>{{ post.title }}</h1>
-            <div class="col-md-6">
-                {% if post.photo %}
-                <img class="img-thumbnail" src="{{ post.photo.url }}" width="100%" height="600"><text x="50%" y="50%"  dy=".3em">{{p.title}}</text>
-            </div>
-            {% endif %}
+        <div class="col-md-6">
+            {% if post.photo %}
+            <img class="img-thumbnail" src="{{ post.photo.url }}" width="100%" height="600"><text x="50%" y="50%"  dy=".3em">{{p.title}}</text>
+        </div>
+        {% endif %}
         <div class="col-md-6">
             {{ post.content|linebreaks }}
         </div>
@@ -17,21 +17,51 @@
     </div>
 
 </div>
-{% for comment in comments %}
-    <div class="comment">
-        <p class="info">
-            Comment {{ forloop.counter }} by {{ comment.name }}
+<div class="container">
+{% with comments.count as total_comments %}
+ {% if total_comments == 1 or total_comments == 21 %}
+    <h2>
+        {{ total_comments }} Коментарий
+    </h2>
+{% elif  5 <= total_comments and total_comments < 20 or total_comments == 0 %}
+    <h2>
+        {{ total_comments }} Коментариев
+    </h2>
+{% else %}
+  <h2>
+        {{ total_comments }} Коментария
+    </h2>
+{% endif %}
+{% endwith %}
 
-        </p>
-        {{ comment.body|linebreaks }}
-    </div>
 
-{% endfor %}
 
-    <h2>Добавить коментарий</h2>
-    <form action="{% url 'Comment_show' post.id %}" method="post">
-        {{ comment_form.as_p }}
-        {% csrf_token %}
-        <p><input type="submit" value="Add comment"></p>
-    </form>
-{% endblock %}
+    <div class="text-left">
+        {% for comment in comments %}
+        <div class="alert alert-secondary">
+            <h4 class="alert-heading">{{ user.username }}</h4><h6>{{ comment.time_create }}</h6>
+            <p>{{ comment.body|linebreaks }}</p>
+        </div>
+
+
+        {% endfor %}
+        <h2>Добавить коментарий</h2>
+        <div class="container">
+        <form action="{% url 'Comment_show' post.id %}" method="post">
+            {% if user.is_authenticated %}
+            <div class="form-error">{{ form.non_field_errors }}</div>
+            {{ comment_form.as_p }}
+            {% csrf_token %}
+            <div class="form-error">{{f.errors}}</div>
+            <button type="submit" class="btn btn-primary">Коментировать</button>
+            {% else %}
+            <h4 class="container text-center">Для оправки коментария нужна авторизация</h4>
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            {% endif %}
+        </form>
+        </div>
+
+</div>
+
+        {% endblock %}

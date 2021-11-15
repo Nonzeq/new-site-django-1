@@ -23,7 +23,8 @@ class CommentAdmin(admin.ModelAdmin):
     list_filter = ('time_create', 'time_update', 'is_published')
     list_editable = ('is_published',)
     list_filter = ('time_create', 'is_published')
-    search_fields = ('name', 'body')
+    search_fields = ('nickname', 'body')
+
 
 admin.site.register(Games, GamesAdmin)
 admin.site.register(Category, CategoryAdmin)
